@@ -25,7 +25,7 @@ client = commands.Bot(command_prefix='.')
 async def refreshThread():
   global refreshTime, client
   await client.wait_until_ready()
-  channel = client.get_channel(id=test_channel_id)
+  channel = client.get_channel(id=prod_channel_id)
   while not client.is_closed():
     async for i in watcher.fetchAccountHistory():
       res = json.loads(i[1])
