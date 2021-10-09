@@ -62,7 +62,7 @@ class Watcher:
 
     async def __fetchTx(self, txHash):
         try:
-            await asyncio.sleep(10)
+            await asyncio.sleep(15)
             async with aiohttp.ClientSession() as session:
                 raw = await fetch(session=session, url=SOLSCAN_TX_API+txHash)
                 # print(SOLSCAN_TX_API+txHash)
