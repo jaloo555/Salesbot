@@ -27,6 +27,7 @@ class Watcher:
     def preload(self):
         with open('cache.json') as json_file:
             self.__processed_tx = json.load(json_file)
+            print(self.__processed_tx)
 
     async def test(self):
         async with self.__rpc_client as client:
@@ -41,7 +42,7 @@ class Watcher:
                 if (res['succcess'] and res['data'] and len(res['data']) > 0):
                     for d in res['data']:
                         txHash = d['txHash']
-                        if txHash not in self.__processed_tx or self.__processed_tx[txHash] == True:
+                        if txHash not in self.__processed_tx or self.__processed_tx[txHash] == False:
                             self.__processed_tx[txHash] = False
                             tx = await self.__fetchTx(txHash=txHash)
                             if tx:
