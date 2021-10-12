@@ -18,6 +18,9 @@ test_channel_id = 886703060078960674
 prod_channel_id = 892254339928842260
 TOKEN = os.environ.get("TOKEN")
 url = ("https://api.mainnet-beta.solana.com")
+rank = None
+with open('./indiv_ranking_rev.json') as f:
+  rank = json.load(f)
 watcher = Watcher("Hv3kURiwHKfGAq2a5jkHpC5mJsm95eKgi86WanEkZm3z", url)
 random = ["We gunna mech it~", "Congratulations on meching it!","AYOOOOOOOO","GUNNA MECH IT", "LFGGGG"]
 client = commands.Bot(command_prefix='.')
@@ -29,9 +32,11 @@ async def refreshThread():
   while not client.is_closed():
     async for i in watcher.fetchAccountHistory():
       res = json.loads(i[1])
+      id_num = res['name'].split('#')[1]
       embedVar = discord.Embed(title=f"{res['name']} → SOLD", color=0xffffff)
       embedVar.set_thumbnail(url=f"{res['image']}")
-      embedVar.add_field(name="Price (Sol)", value=i[0], inline=False)
+      embedVar.add_field(name="Rank", value=rank[id_num], inline=True)
+      embedVar.add_field(name="Price (Sol)", value=i[0], inline=True)
       embedVar.add_field(name="Mint Token", value=i[2], inline=False)
       embedVar.set_footer(text="Sold on Magic Eden.")
       await channel.send(embed=embedVar)

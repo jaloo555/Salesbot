@@ -12,7 +12,6 @@ from logging import Logger, log
 from utils.constants import LAMPORTS_PER_SOL, SOLSCAN_ADDRESS_API, SOLSCAN_TX_API, SOLSCAN_TOKEN_API
 from utils.helper import fetch
 
-
 class Watcher:
     def __init__(self, 
         program_address: str,
@@ -42,7 +41,7 @@ class Watcher:
                 if (res['succcess'] and res['data'] and len(res['data']) > 0):
                     for d in res['data']:
                         txHash = d['txHash']
-                        if txHash not in self.__processed_tx:
+                        if txHash not in self.__processed_tx or self.__processed_tx[txHash] == True:
                             self.__processed_tx[txHash] = False
                             tx = await self.__fetchTx(txHash=txHash)
                             if tx:
